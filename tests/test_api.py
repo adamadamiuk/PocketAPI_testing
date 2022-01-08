@@ -75,6 +75,7 @@ class TestingAPI(BaseTest):
         self.assertEqual("<Response [200]>", str(response))
         arch_list = api_request.retrieve_list_archived(self.code, self.access)
         self.assertEqual('https://stackoverflow.com', str(arch_list['list'][str(self.pg_id)]['given_url']))
+        # moving an element to the Pocket App Archive
 
     def test_delete(self):
         response = api_request.delete(self.code, self.access, self.pg_id)
@@ -83,7 +84,7 @@ class TestingAPI(BaseTest):
     def test_favorite(self):
         response = api_request.favourite(self.code, self.access, self.pg_id)
         self.assertEqual("<Response [200]>", str(response))
-
+        # moving an element to the Pocket App Favorites
 
 
 

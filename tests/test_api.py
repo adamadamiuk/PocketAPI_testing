@@ -17,6 +17,22 @@ class TestingAPI(BaseTest):
         title = 'Onet.pl website'
         response = api_request.add(self.code, self.access, url, title)
         self.assertEqual("http://onet.pl", str(response['item']['normal_url']))
+        # adding a correct website
+
+    def test_add_wrong(self):
+        url = 'http://website'
+        title = 'Wrong website'
+        response = api_request.add(self.code, self.access, url, title)
+        self.assertNotEqual("http://website", str(response['item']['normal_url']))
+        # adding an incorrect element - test will fail, because the API accepts the incorrect entry.
+
+    def test_add_duplicate(self):
+        url = 'http://www.onet.pl'
+        title = 'Onet.pl website'
+        response = api_request.add(self.code, self.access, url, title)
+        self.assertNotEqual("http://onet.pl", str(response['item']['normal_url']))
+        # adding a duplicated element - test will fail because the API accepts the duplicated entry.
+        # for testing purpose we assume that this is not correct. In reality, the API overwrites the previous entry.
 
     def test_list(self):
         response = api_request.retrieve_list(self.code, self.access)
@@ -26,7 +42,14 @@ class TestingAPI(BaseTest):
     def test_add_tags(self):
         response = api_request.add_tags(self.code, self.access, 'stackoverflow tag', self.pg_id)
         self.assertEqual("<Response [200]>", str(response))
+        # adding tags to an entry
+
+    def test_add_empty_tag(self):
+        response = api_request.add_tags(self.code, self.access, '', self.pg_id)
+        results = response.json()
+        self.assertEqual("[False]", str(results['action_results']))
         print(response.json())
+        # adding an empty tag and verifying that the result is False
 
     def test_add_multiple_items(self):
         # adding a batch of url addresses

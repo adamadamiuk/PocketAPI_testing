@@ -3,7 +3,7 @@ import jwt
 import pathlib
 """
 Below code allows to input and hash credentials into a db.json file
-Thad data will be encoded with JWT and decoded when logging in is necessary to proceed
+That data will be encoded with JWT and decoded when logging in is necessary to proceed
 """
 class UserBase:
 

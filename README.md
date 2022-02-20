@@ -16,4 +16,4 @@ In **Tests** you can find implementation of tests with use of **unittest** frame
 - PyJWT 2.1.0
 - Requests 2.25.1
 - PyCharm 2021.1.2
-- Chromedriver v.90
+- Chromedriver v.98

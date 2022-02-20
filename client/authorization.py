@@ -1,5 +1,7 @@
+import time
 from selenium import webdriver
 import requests
+
 
 from client.security.user_config import UserBase
 from locators import *
@@ -7,7 +9,7 @@ from resources import *
 
 """
 Pocket API require some initial setting to allow requests.
-It has already been done for this test purpose.
+It has already been done for this test purpose!
 """
 
 headers = {"X-Accept": "application/json"}
@@ -38,14 +40,15 @@ def authorization_token(req_code):
     pass_field.click()
     pass_field.send_keys(login_pass)
     button.click()
+    time.sleep(3)
     driver.close()
     # logging in using Selenium
 
 def access_token(req_code):
     authorization_token(req_code)
     payload = {
-        "consumer_key": KEY,
-        "code": req_code}
+        "consumer_key":KEY,
+        "code":str(req_code)}
 
     response = requests.post(f"{BASE_URL}/v3/oauth/authorize", data=payload, headers=headers)
     acc_token = response.json()["access_token"]

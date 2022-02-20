@@ -1,6 +1,6 @@
 BASE_URL = "https://getpocket.com"
 REDIRECT_URL = "localhost"
-KEY = "	97592-ac10204c42be9eeb8366beae"
+KEY = "97592-ac10204c42be9eeb8366beae"
 
 
 batch = [

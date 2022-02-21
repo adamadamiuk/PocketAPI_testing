@@ -37,18 +37,22 @@ class TestingAPI(BaseTest):
     def test_list(self):
         response = api_request.retrieve_list(self.code, self.access)
         self.assertEqual("<Response [200]>", str(response))
-        # checking if the list of all items can be obtained
+        self.assertIsNotNone(response.json()['list'])
+        # checking if the list of all items can be obtained and that the list is not empty
 
     def test_add_tags(self):
         response = api_request.add_tags(self.code, self.access, 'stackoverflow tag', self.pg_id)
         self.assertEqual("<Response [200]>", str(response))
-        # adding tags to an entry
+        resp = api_request.retrieve_list_tagged(self.code, self.access, 'stackoverflow tag')
+        checking_tag = resp.json()['list']
+        print(checking_tag)
+        self.assertTrue(checking_tag)
+        # adding tags to an entry and verifying that the added tag is present
 
     def test_add_empty_tag(self):
         response = api_request.add_tags(self.code, self.access, '', self.pg_id)
         results = response.json()
         self.assertEqual("[False]", str(results['action_results']))
-        print(response.json())
         # adding an empty tag and verifying that the result is False
 
     def test_add_multiple_items(self):

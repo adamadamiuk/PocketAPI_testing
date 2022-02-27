@@ -176,3 +176,14 @@ class ApiRequests:
 
         response = requests.post(url, data=payload)
         return response
+
+    @staticmethod
+    def see_fav(key, access):
+        url = f"{BASE_URL}/v3/get"
+        payload = {
+            "consumer_key": key,
+            "access_token": access,
+            "favorite": 1
+        }
+        response = requests.post(url, data=payload)
+        return response

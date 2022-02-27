@@ -45,7 +45,6 @@ class TestingAPI(BaseTest):
         self.assertEqual("<Response [200]>", str(response))
         resp = api_request.retrieve_list_tagged(self.code, self.access, 'stackoverflow tag')
         checking_tag = resp.json()['list']
-        print(checking_tag)
         self.assertTrue(checking_tag)
         # adding tags to an entry and verifying that the added tag is present
 
@@ -71,8 +70,11 @@ class TestingAPI(BaseTest):
     def test_retrieve_tagged_list(self):
         resp = api_request.retrieve_list_tagged(self.code, self.access, 'test tag')
         checking_tag = resp.json()['list']
+        tg_id = (list(checking_tag))[0]
         self.assertTrue(checking_tag)
+        self.assertEqual("https://stackoverflow.com", checking_tag[tg_id]['given_url'])
         # if "test tag" has been used, the list is not empty and therefore "True"
+        # testing, if the result is equal to the one expected. The value has been provided in test_base.py
 
     def test_archive(self):
         response = api_request.archive(self.code, self.access, self.pg_id)
@@ -89,6 +91,10 @@ class TestingAPI(BaseTest):
         response = api_request.favourite(self.code, self.access, self.pg_id)
         self.assertEqual("<Response [200]>", str(response))
         # moving an element to the Pocket App Favorites
+
+        response2 = api_request.see_fav(self.code, self.access)
+        self.assertEqual("https://stackoverflow.com", response2.json()['list'][str(self.pg_id)]['given_url'])
+        # verify that correct url is added as a favorite
 
 
 
